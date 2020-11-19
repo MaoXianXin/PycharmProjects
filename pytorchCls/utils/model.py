@@ -29,7 +29,7 @@ def define_optim(net):
     #     fixed_decay=False,
     #     rectify=False,
     # )
-    optimizer = optim.SGD(net.parameters(), lr=1e-3, momentum=0.5)
+    optimizer = optim.SGD(net.parameters(), lr=5e-3, momentum=0.5)
     # optimizer = optim.Adam(net.parameters(), lr=1e-3)
     return criterion, optimizer
 
