@@ -2,3 +2,15 @@
 .idea/
 
 pytorchCls/course4/resnet50Flowers.py
+
+*.jpg
+
+*.ipynb
+convolution-network-natural-scenes/utils/__init__.py
+
+convolution-network-natural-scenes/dataset/__init__.py
+
+convolution-network-natural-scenes/nets/__init__.py
+
+
+convolution-network-natural-scenes/src/__init__.py
