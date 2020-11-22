@@ -1,7 +1,6 @@
 import torchvision.models as models
 import torch.nn as nn
 import torch.optim as optim
-# import torch_optimizer as optim
 import copy
 import torch
 from pytorchCls.utils.eval import calc_acc, calc_every_acc
@@ -18,19 +17,7 @@ def define_model(classes):
 # 定义优化器和损失函数
 def define_optim(net):
     criterion = nn.CrossEntropyLoss()
-    # optimizer = optim.AdaBelief(
-    #     net.parameters(),
-    #     lr= 1e-1,
-    #     betas=(0.9, 0.999),
-    #     eps=1e-3,
-    #     weight_decay=0,
-    #     amsgrad=False,
-    #     weight_decouple=False,
-    #     fixed_decay=False,
-    #     rectify=False,
-    # )
-    optimizer = optim.SGD(net.parameters(), lr=5e-3, momentum=0.5)
-    # optimizer = optim.Adam(net.parameters(), lr=1e-3)
+    optimizer = optim.SGD(net.parameters(), lr=8e-3, momentum=0.5, weight_decay=1e-3)
     return criterion, optimizer
 
 

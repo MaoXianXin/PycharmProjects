@@ -19,7 +19,7 @@ def setup_seed(seed):
 # 设置哪块显卡可见
 def set_gpu():
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     return device
