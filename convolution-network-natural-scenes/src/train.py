@@ -8,9 +8,8 @@ from tensorflow.keras.models import save_model
 from nets.conv_net import ConvModel
 from utils.data_generator import train_val_generator
 from utils.image_plot import plot_images
-import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 train_gen = train_val_generator(
     data_dir='../dataset/natural-scenes/seg_train',
@@ -71,7 +70,7 @@ History对象，History.history属性会记录每一轮训练集和验证集的�
 '''
 
 history = model.fit(x=train_gen,
-                    epochs=50, validation_data=val_gen,
+                    epochs=1, validation_data=val_gen,
                     shuffle=True, callbacks=callbacks)
 eval_history = model.evaluate(val_gen)
 print('-----val_loss-----', '\n', eval_history[0])

@@ -19,7 +19,14 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 '''
 
 def train_val_generator(data_dir, target_size, batch_size, class_mode=None, subset='training'):
-    train_val_datagen = ImageDataGenerator(rescale=1./255., validation_split=0.2)
+    train_val_datagen = ImageDataGenerator(# rotation_range=10, # rotation
+        # width_shift_range=0.2, # horizontal shift
+        # height_shift_range=0.2, # vertical shift
+        # zoom_range=0.2, # zoom
+        # horizontal_flip=True, # horizontal flip
+        # brightness_range=[0.2,1.2],
+        rescale=1./255.,
+        validation_split=0.2)
     return train_val_datagen.flow_from_directory(
         directory=data_dir,
         target_size=target_size,

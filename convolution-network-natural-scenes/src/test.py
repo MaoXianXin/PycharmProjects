@@ -1,16 +1,19 @@
 from tensorflow.keras.models import load_model
 from utils.data_generator import test_generator, pred_generator
 from utils.image_plot import plot_images
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 test_gen = test_generator(
     data_dir='../dataset/natural-scenes/seg_test',
-    target_size=(64, 64),
+    target_size=(150, 150),
     batch_size=32,
     class_mode='categorical')
 
 pred_gen = pred_generator(
     data_dir='../dataset/natural-scenes/seg_pred',
-    target_size=(64, 64),
+    target_size=(150, 150),
     batch_size=32,
     class_mode=None)
 
@@ -28,7 +31,7 @@ pred_gen = pred_generator(
 - x：需要做预测的数据集，可以用ImageDataGenerator读取的数据。
 '''
 
-model_path = '../models/model-2020-07-22-16-51-19'
+model_path = './models/model-2020-11-24-15-47-27'
 loaded_model = load_model(filepath=model_path)
 loss, accuracy = loaded_model.evaluate(x=test_gen)
 
