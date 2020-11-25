@@ -1,9 +1,12 @@
+import tensorflow as tf
+import numpy as np
 from tensorflow.keras.models import load_model
+from nets.conv_net import ConvModel
 from utils.data_generator import test_generator, pred_generator
 from utils.image_plot import plot_images
 import os
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 test_gen = test_generator(
     data_dir='../dataset/natural-scenes/seg_test',
@@ -31,8 +34,17 @@ pred_gen = pred_generator(
 - x：需要做预测的数据集，可以用ImageDataGenerator读取的数据。
 '''
 
-model_path = './models/model-2020-11-24-15-47-27'
-loaded_model = load_model(filepath=model_path)
+# model_path = './models/model-2020-11-24-15-47-27'
+# loaded_model = load_model(filepath=model_path)
+input = np.ones((32, 150, 150, 3))
+loaded_model = ConvModel()
+loaded_model(input)
+loaded_model.compile(
+    loss='categorical_crossentropy',
+    optimizer=tf.keras.optimizers.SGD(
+        learning_rate=0.003, momentum=0.5, decay=1e-3),
+    metrics=['accuracy'])
+loaded_model.load_weights('test.h5')
 loss, accuracy = loaded_model.evaluate(x=test_gen)
 
 pred_batch = pred_gen.next()
