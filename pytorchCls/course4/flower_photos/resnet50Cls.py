@@ -10,7 +10,7 @@ device = set_gpu()
 setup_seed(20)
 
 # 数据读取
-train_batch = 96
+train_batch = 64
 test_batch = 2
 EPOCH = 200
 trainloader, testloader, classes = get_dataloader(train_batch, test_batch)

@@ -17,7 +17,7 @@ def define_model(classes):
 # 定义优化器和损失函数
 def define_optim(net):
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.SGD(net.parameters(), lr=8e-3, momentum=0.5, weight_decay=1e-3)
+    optimizer = optim.SGD(net.parameters(), lr=1e-3, momentum=0.5, weight_decay=1e-3)
     return criterion, optimizer
 
 

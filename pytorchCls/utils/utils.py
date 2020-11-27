@@ -26,26 +26,26 @@ def set_gpu():
 
 # 数据读取
 def get_dataloader(train_batch, test_batch):
-    trainset = torchvision.datasets.ImageFolder('/home/mao/PycharmProjects/pytorchCls/data/flowersDataset/train',
+    trainset = torchvision.datasets.ImageFolder('/home/mao/PycharmProjects/convolution-network-natural-scenes/dataset/natural-scenes/seg_train',
                                                 transform=transforms.Compose([
                                                     transforms.Resize(256),
                                                     transforms.CenterCrop(224),
                                                     transforms.RandomHorizontalFlip(),
-                                                    transforms.ColorJitter(brightness=0.3, contrast=0.3, hue=0.3),
-                                                    transforms.RandomRotation(50),
+                                                    transforms.ColorJitter(brightness=0.1, contrast=0.1, hue=0.1),
+                                                    transforms.RandomRotation(5),
                                                     transforms.ToTensor(),
-                                                    transforms.Normalize((0.5059, 0.4448, 0.3112),
-                                                                         (0.2443, 0.2193, 0.2216))
+                                                    transforms.Normalize((0.485, 0.456, 0.406),
+                                                                         (0.229, 0.224, 0.225))
                                                 ]))
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=train_batch,
                                               shuffle=True, num_workers=0)
-    testset = torchvision.datasets.ImageFolder('/home/mao/PycharmProjects/pytorchCls/data/flowersDataset/val',
+    testset = torchvision.datasets.ImageFolder('/home/mao/PycharmProjects/convolution-network-natural-scenes/dataset/natural-scenes/seg_test',
                                                transform=transforms.Compose([
                                                    transforms.Resize(256),
                                                    transforms.CenterCrop(224),
                                                    transforms.ToTensor(),
-                                                   transforms.Normalize((0.5088, 0.4513, 0.3220),
-                                                                        (0.2478, 0.2197, 0.2264))
+                                                   transforms.Normalize((0.485, 0.456, 0.406),
+                                                                        (0.229, 0.224, 0.225))
                                                ]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=test_batch,
                                              shuffle=True, num_workers=0)
