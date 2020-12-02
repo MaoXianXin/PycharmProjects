@@ -12,14 +12,14 @@ os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 train_gen = train_val_generator(
-    data_dir='../dataset/natural-scenes/seg_train',
+    data_dir='../dataset/imagenette2-160/imagenette2-160/train',
     target_size=(150, 150),    # 把图片的h和w从64变成150，增大图片的分辨率
     batch_size=32,
     class_mode='categorical',
     subset='training')
 
 val_gen = train_val_generator(
-    data_dir='../dataset/natural-scenes/seg_train',
+    data_dir='../dataset/imagenette2-160/imagenette2-160/train',
     target_size=(150, 150),
     batch_size=32,
     class_mode='categorical',

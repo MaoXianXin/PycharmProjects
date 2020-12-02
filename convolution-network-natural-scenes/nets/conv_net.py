@@ -95,7 +95,7 @@ class ConvModel(Model):
         self.flatten_norm = get_norm(norm_type='batch')
 
         # 全连接层
-        self.dense = Dense(units=6, activation="softmax", name='logit')
+        self.dense = Dense(units=10, activation="softmax", name='logit')
 
     def call(self, x):
         x = self.conv_1_1(x)

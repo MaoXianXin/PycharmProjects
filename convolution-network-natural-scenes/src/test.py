@@ -9,13 +9,13 @@ os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 test_gen = test_generator(
-    data_dir='../dataset/natural-scenes/seg_test',
+    data_dir='../dataset/imagenette2-160/imagenette2-160/val',
     target_size=(150, 150),
     batch_size=32,
     class_mode='categorical')
 
 pred_gen = pred_generator(
-    data_dir='../dataset/natural-scenes/seg_pred',
+    data_dir='../dataset/imagenette2-160/imagenette2-160/val',
     target_size=(150, 150),
     batch_size=32,
     class_mode=None)

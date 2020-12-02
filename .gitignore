@@ -18,3 +18,5 @@ convolution-network-natural-scenes/src/__init__.py
 *.pyc
 
 *.h5
+
+*.JPEG
