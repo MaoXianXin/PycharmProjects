@@ -47,10 +47,10 @@ def start_train(net, EPOCH, trainloader, device, optimizer, criterion, testloade
                 running_loss = 0.0
         calc_acc(net, trainloader, device)
         testAcc = calc_acc(net, testloader, device)
-        calc_every_acc(net, testloader, device, classes, batch_size=test_batch)
+        # calc_every_acc(net, testloader, device, classes, batch_size=test_batch)
         if testAcc > best_acc:
             print("------saving best model------")
             best_acc = testAcc
             best_model_wts = copy.deepcopy(net.state_dict())
-            torch.save(best_model_wts, 'resnet50Cls.pth')
+            torch.save(best_model_wts, 'resnet50Cls-'+str(epoch+1)+'.pth')
     print('Finished Training')

@@ -11,7 +11,7 @@ setup_seed(20)
 
 # 数据读取
 train_batch = 96
-test_batch = 2
+test_batch = 96
 EPOCH = 200
 trainloader, testloader, classes = get_dataloader(train_batch, test_batch)
 
