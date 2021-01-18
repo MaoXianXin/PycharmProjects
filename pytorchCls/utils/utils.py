@@ -48,7 +48,7 @@ def get_dataloader(train_batch, test_batch):
                                                    #                      (0.229, 0.224, 0.225))
                                                ]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=test_batch,
-                                             shuffle=True, num_workers=4, drop_last=True)
+                                             shuffle=True, num_workers=4, drop_last=False)
     classes = trainloader.dataset.classes
 
     return trainloader, testloader, classes

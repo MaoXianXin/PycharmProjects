@@ -4,6 +4,8 @@ from pytorchCls.utils.model import define_model, define_optim
 import torch
 import torchvision
 import torchvision.transforms as transforms
+import numpy as np
+from sklearn.metrics import classification_report
 
 # 设置哪块显卡可见
 device = set_gpu()
@@ -35,3 +37,16 @@ criterion, optimizer = define_optim(net)
 # 训练后在测试集上进行评测
 net.load_state_dict(torch.load('resnet50Cls.pth'))
 calc_acc(net, testloader, device)
+
+
+predictions = []
+groundtruth = []
+net.eval()
+with torch.no_grad():
+    for data in testloader:
+        images, labels = data[0].to(device), data[1].to(device)
+        outputs = net(images)
+        _, predicted = torch.max(outputs.data, 1)
+        predictions.extend(predicted.to('cpu'))
+        groundtruth.extend(np.asarray(labels.to('cpu')))
+    print(classification_report(groundtruth, predictions, target_names=classes))
