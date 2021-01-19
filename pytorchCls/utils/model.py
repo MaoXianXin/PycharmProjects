@@ -4,6 +4,7 @@ import torch.optim as optim
 import copy
 import torch
 from pytorchCls.utils.eval import calc_acc, calc_every_acc
+from pytorchCls.utils.ohem import NLL_OHEM
 
 
 # 网络结构定义
@@ -16,7 +17,7 @@ def define_model(classes):
 
 # 定义优化器和损失函数
 def define_optim(net):
-    criterion = nn.CrossEntropyLoss()
+    criterion = NLL_OHEM()
     optimizer = optim.SGD(net.parameters(), lr=1e-3, momentum=0.9, weight_decay=1e-3)
     return criterion, optimizer
 
@@ -24,6 +25,7 @@ def define_optim(net):
 def start_train(net, EPOCH, trainloader, device, optimizer, criterion, testloader, classes, test_batch):
     best_model_wts = copy.deepcopy(net.state_dict())
     best_acc = 0.0
+    softmax = torch.nn.LogSoftmax(dim=1)
     for epoch in range(EPOCH):  # loop over the dataset multiple times
         running_loss = 0.0
         for i, data in enumerate(trainloader, 0):
@@ -35,7 +37,7 @@ def start_train(net, EPOCH, trainloader, device, optimizer, criterion, testloade
 
             # forward + backward + optimize
             outputs = net(inputs)
-            loss = criterion(outputs, labels)
+            loss = criterion(softmax(outputs), labels)
             loss.backward()
             optimizer.step()
 
