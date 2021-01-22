@@ -20,8 +20,8 @@ testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerD
                                                transforms.Resize(256),
                                                transforms.CenterCrop(224),
                                                transforms.ToTensor(),
-                                               # transforms.Normalize((0.485, 0.456, 0.406),
-                                               #                      (0.229, 0.224, 0.225))
+                                               transforms.Normalize((0.485, 0.456, 0.406),
+                                                                    (0.229, 0.224, 0.225))
                                            ]))
 testloader = torch.utils.data.DataLoader(testset, batch_size=test_batch,
                                          shuffle=True, num_workers=4, drop_last=False)
@@ -31,11 +31,9 @@ classes = testloader.dataset.classes
 net = define_model(classes)
 net.to(device)
 
-# 定义优化器和损失函数
-criterion, optimizer = define_optim(net)
 
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('resnet50Cls.pth'))
+net.load_state_dict(torch.load('flowers_std_ohem_resnet50Cls-70.pth'))
 calc_acc(net, testloader, device)
 
 

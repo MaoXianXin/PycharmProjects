@@ -34,8 +34,8 @@ def get_dataloader(train_batch, test_batch):
                                                     # transforms.ColorJitter(brightness=0.3, contrast=0.3, hue=0.3),
                                                     transforms.RandomRotation(15),
                                                     transforms.ToTensor(),
-                                                    # transforms.Normalize((0.485, 0.456, 0.406),
-                                                    #                      (0.229, 0.224, 0.225))
+                                                    transforms.Normalize((0.485, 0.456, 0.406),
+                                                                         (0.229, 0.224, 0.225))
                                                 ]))
     trainloader = torch.utils.data.DataLoader(trainset, batch_size=train_batch,
                                               shuffle=True, num_workers=4, drop_last=True)
@@ -44,8 +44,8 @@ def get_dataloader(train_batch, test_batch):
                                                    transforms.Resize(256),
                                                    transforms.CenterCrop(224),
                                                    transforms.ToTensor(),
-                                                   # transforms.Normalize((0.485, 0.456, 0.406),
-                                                   #                      (0.229, 0.224, 0.225))
+                                                   transforms.Normalize((0.485, 0.456, 0.406),
+                                                                        (0.229, 0.224, 0.225))
                                                ]))
     testloader = torch.utils.data.DataLoader(testset, batch_size=test_batch,
                                              shuffle=True, num_workers=4, drop_last=False)
