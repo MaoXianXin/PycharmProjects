@@ -20,7 +20,7 @@ def calc_acc(net, dataloader, device):
     return 100.0 * correct / total
 
 
-# 计算每个类别的Acc
+# 计算每个类别的召回率
 def calc_every_acc(net, dataloader, device, classes, batch_size=2):
     net.eval()
     class_correct = list(0.0 for i in range(len(classes)))

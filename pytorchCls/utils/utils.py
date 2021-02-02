@@ -8,7 +8,7 @@ import os
 
 
 # 设置随机数种子，使结果可复现
-def setup_seed(seed):
+def setup_seed(seed: int):
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
     np.random.seed(seed)
@@ -17,9 +17,9 @@ def setup_seed(seed):
 
 
 # 设置哪块显卡可见
-def set_gpu():
+def set_gpu(id: str):
     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    os.environ["CUDA_VISIBLE_DEVICES"] = id
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
     return device
@@ -31,7 +31,6 @@ def get_dataloader(train_batch, test_batch):
                                                 transform=transforms.Compose([
                                                     transforms.RandomResizedCrop(224),
                                                     transforms.RandomHorizontalFlip(),
-                                                    # transforms.ColorJitter(brightness=0.3, contrast=0.3, hue=0.3),
                                                     transforms.RandomRotation(15),
                                                     transforms.ToTensor(),
                                                     transforms.Normalize((0.485, 0.456, 0.406),
@@ -56,7 +55,6 @@ def get_dataloader(train_batch, test_batch):
 
 # functions to show an image
 def imshow(img):
-    # img = img / 2 + 0.5  # unnormalize
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()

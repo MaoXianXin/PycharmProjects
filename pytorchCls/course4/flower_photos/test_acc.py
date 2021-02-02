@@ -1,6 +1,6 @@
 from pytorchCls.utils.eval import calc_acc
 from pytorchCls.utils.utils import setup_seed, set_gpu
-from pytorchCls.utils.model import define_model, define_optim
+from pytorchCls.utils.model import define_model
 import torch
 import torchvision
 import torchvision.transforms as transforms
@@ -8,14 +8,14 @@ import numpy as np
 from sklearn.metrics import classification_report
 
 # 设置哪块显卡可见
-device = set_gpu()
+device = set_gpu('0')
 
 # 设置随机数种子，使结果可复现
 setup_seed(20)
 
 # 数据读取
 test_batch = 96
-testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/test',
+testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/val',
                                            transform=transforms.Compose([
                                                transforms.Resize(256),
                                                transforms.CenterCrop(224),
@@ -33,7 +33,7 @@ net.to(device)
 
 
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('flowers_std_ohem_resnet50Cls-70.pth'))
+net.load_state_dict(torch.load('resnet18Cls-190.pth'))
 calc_acc(net, testloader, device)
 
 
