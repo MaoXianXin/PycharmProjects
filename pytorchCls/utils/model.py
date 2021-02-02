@@ -5,12 +5,12 @@ import copy
 import torch
 from pytorchCls.utils.eval import calc_acc, calc_every_acc
 from pytorchCls.utils.ohem import NLL_OHEM
-from pytorchCls.models.resnet import resnet18
+from pytorchCls.models.resnet import resnet18, resnet50
 
 
 # 网络结构定义
 def define_model(classes):
-    net = resnet18(pretrained=True)
+    net = resnet50(pretrained=True)
     num_ftrs = net.fc.in_features
     net.fc = nn.Linear(in_features=num_ftrs, out_features=len(classes), bias=True)
     return net
