@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch.hub import load_state_dict_from_url
 from typing import Union, List, Dict, Any, cast
+from torchsummary import summary
 
 
 __all__ = [
@@ -111,3 +112,8 @@ def vgg19(pretrained: bool = False, progress: bool = True, **kwargs: Any) -> VGG
         progress (bool): If True, displays a progress bar of the download to stderr
     """
     return _vgg('vgg19', 'E', False, pretrained, progress, **kwargs)
+
+
+if __name__ == '__main__':
+    model = vgg16().cuda(0)
+    summary(model, input_size=(3, 224, 224))
