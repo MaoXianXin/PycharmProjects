@@ -33,7 +33,7 @@ net.to(device)
 
 
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('resnext50Cls-ohem-aug-49.pth'))
+net.load_state_dict(torch.load('densenet121Cls-ohem-aug-174.pth'))
 calc_acc(net, testloader, device)
 
 
