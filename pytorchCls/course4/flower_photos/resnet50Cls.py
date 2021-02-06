@@ -8,8 +8,8 @@ device = set_gpu('1')
 setup_seed(20)
 
 # 数据读取
-train_batch = 96
-test_batch = 96
+train_batch = 72
+test_batch = 72
 EPOCH = 200
 trainloader, testloader, classes = get_dataloader(train_batch, test_batch)
 

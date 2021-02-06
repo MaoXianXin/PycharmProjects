@@ -5,13 +5,13 @@ import copy
 import torch
 from pytorchCls.utils.eval import calc_acc, calc_every_acc
 from pytorchCls.utils.ohem import NLL_OHEM
-from pytorchCls.models.resnet import resnet18, resnet50
+from pytorchCls.models.resnet import resnet18, resnet50, resnext50_32x4d, wide_resnet50_2
 from pytorchCls.models.vgg import vgg16, vgg19
 
 
 # 网络结构定义
 def define_model(classes):
-    net = resnet18(pretrained=True)
+    net = wide_resnet50_2(pretrained=True)
     num_ftrs = net.fc.in_features
     net.fc = nn.Linear(in_features=num_ftrs, out_features=len(classes), bias=True)
     return net
@@ -56,5 +56,5 @@ def start_train(net, EPOCH, trainloader, device, optimizer, criterion, testloade
             print("------saving best model------")
             best_acc = testAcc
             best_model_wts = copy.deepcopy(net.state_dict())
-            torch.save(best_model_wts, 'resnet18Cls-'+str(epoch+1)+'.pth')
+            torch.save(best_model_wts, 'resnext50Cls-'+str(epoch+1)+'.pth')
     print('Finished Training')
