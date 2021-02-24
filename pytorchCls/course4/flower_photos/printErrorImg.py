@@ -1,12 +1,10 @@
-from pytorchCls.utils.eval import calc_acc
 from pytorchCls.utils.utils import setup_seed, set_gpu
 from pytorchCls.utils.model import define_model
 import torch
 import torchvision
 import torchvision.transforms as transforms
-import numpy as np
-from sklearn.metrics import classification_report, confusion_matrix
-import pandas as pd
+from shutil import copyfile
+import os
 
 # 设置哪块显卡可见
 device = set_gpu('0')
@@ -15,8 +13,8 @@ device = set_gpu('0')
 setup_seed(20)
 
 # 数据读取
-test_batch = 96
-testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/test',
+test_batch = 32
+testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/val',
                                            transform=transforms.Compose([
                                                transforms.Resize(256),
                                                transforms.CenterCrop(224),
@@ -27,29 +25,22 @@ testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerD
 testloader = torch.utils.data.DataLoader(testset, batch_size=test_batch,
                                          shuffle=True, num_workers=4, drop_last=False)
 classes = testloader.dataset.classes
-
 # 网络结构定义
 net = define_model(classes)
 net.to(device)
 
-
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('resnet18Cls-noisydata-errorimg-101.pth'))
-calc_acc(net, testloader, device)
+net.load_state_dict(torch.load('resnet18Cls-noisydata-aug-92.pth'))
 
-
-predictions = []
-groundtruth = []
+count = 0
+dest_parent_path = '/home/mao/Downloads/datasets/flowerError/'
 net.eval()
 with torch.no_grad():
-    for data in testloader:
-        images, labels = data[0].to(device), data[1].to(device)
-        outputs = net(images)
-        _, predicted = torch.max(outputs.data, 1)
-        predictions.extend(predicted.to('cpu'))
-        groundtruth.extend(np.asarray(labels.to('cpu')))
-    print(classification_report(groundtruth, predictions, target_names=classes))
-
-confusionMatrix = confusion_matrix(groundtruth, predictions)
-
-print(pd.DataFrame(confusionMatrix, index=classes, columns=classes))
+    for index, data in enumerate(testset):
+        output = torch.argmax(net(torch.unsqueeze(data[0], dim=0).to(device)), -1).to('cpu')
+        if data[1] != output.item():
+            print(testset.imgs[index], output.item())
+            count += 1
+            if not os.path.exists(dest_parent_path+classes[testset.imgs[index][1]]):
+                os.makedirs(dest_parent_path+classes[testset.imgs[index][1]], exist_ok=True)
+            copyfile(testset.imgs[index][0], dest_parent_path+classes[testset.imgs[index][1]]+'/'+testset.imgs[index][0].split('/')[-1])

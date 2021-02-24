@@ -12,9 +12,9 @@ from pytorchCls.models.densenet import densenet121
 
 # 网络结构定义
 def define_model(classes):
-    net = densenet121(pretrained=True)
-    num_ftrs = net.classifier.in_features
-    net.classifier = nn.Linear(in_features=num_ftrs, out_features=len(classes), bias=True)
+    net = resnet18(pretrained=True)
+    num_ftrs = net.fc.in_features
+    net.fc = nn.Linear(in_features=num_ftrs, out_features=len(classes), bias=True)
     return net
 
 
@@ -57,5 +57,5 @@ def start_train(net, EPOCH, trainloader, device, optimizer, criterion, testloade
             print("------saving best model------")
             best_acc = testAcc
             best_model_wts = copy.deepcopy(net.state_dict())
-            torch.save(best_model_wts, 'densenet121Cls-'+str(epoch+1)+'.pth')
+            torch.save(best_model_wts, 'resnet18Cls-'+str(epoch+1)+'.pth')
     print('Finished Training')
