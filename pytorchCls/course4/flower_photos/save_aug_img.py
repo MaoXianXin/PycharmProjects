@@ -3,12 +3,13 @@ import torchvision
 import torchvision.transforms as transforms
 import os
 from pytorchCls.utils.utils import setup_seed
+import time
 
 # 设置随机数种子，使结果可复现
 setup_seed(20)
 
 train_batch = 32
-trainset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/train',
+trainset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/natural-scenes/seg_train',
                                             transform=transforms.Compose([
                                                 transforms.RandomResizedCrop(224),
                                                 transforms.RandomHorizontalFlip(),
@@ -21,7 +22,9 @@ classes = trainloader.dataset.classes
 
 for index, data in enumerate(trainset):
     print(index, data[1])
-    img_path = '/home/mao/Downloads/datasets/flowerDatasets/train/'+classes[data[1]]
+    time_list = str(time.time()).split('.')
+    print(int(time_list[0]+time_list[1]))
+    img_path = '/home/mao/Downloads/datasets/natural-scenes/seg_train/'+classes[data[1]]
     if not os.path.exists(img_path):
         os.makedirs(img_path, exist_ok=True)
-    data[0].save('/home/mao/Downloads/datasets/flowerDatasets/train/'+classes[data[1]]+'/'+str(index)+'.jpg')
+    data[0].save('/home/mao/Downloads/datasets/natural-scenes/seg_train/'+classes[data[1]]+'/'+str(time_list[0]+time_list[1])+'.jpg')

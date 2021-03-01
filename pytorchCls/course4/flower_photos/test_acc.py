@@ -16,7 +16,7 @@ setup_seed(20)
 
 # 数据读取
 test_batch = 96
-testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/test',
+testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/natural-scenes/seg_test',
                                            transform=transforms.Compose([
                                                transforms.Resize(256),
                                                transforms.CenterCrop(224),
@@ -34,7 +34,7 @@ net.to(device)
 
 
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('resnet18Cls-noisydata-errorimg-101.pth'))
+net.load_state_dict(torch.load('resnet18Cls-19.pth'))
 calc_acc(net, testloader, device)
 
 

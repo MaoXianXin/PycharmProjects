@@ -14,7 +14,7 @@ setup_seed(20)
 
 # 数据读取
 test_batch = 32
-testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/flowerDatasets/val',
+testset = torchvision.datasets.ImageFolder('/home/mao/Downloads/datasets/natural-scenes/seg_train',
                                            transform=transforms.Compose([
                                                transforms.Resize(256),
                                                transforms.CenterCrop(224),
@@ -30,10 +30,10 @@ net = define_model(classes)
 net.to(device)
 
 # 训练后在测试集上进行评测
-net.load_state_dict(torch.load('resnet18Cls-noisydata-aug-92.pth'))
+net.load_state_dict(torch.load('resnet18Cls-19.pth'))
 
 count = 0
-dest_parent_path = '/home/mao/Downloads/datasets/flowerError/'
+dest_parent_path = '/home/mao/Downloads/datasets/natural-scenesError/'
 net.eval()
 with torch.no_grad():
     for index, data in enumerate(testset):
